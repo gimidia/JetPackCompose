@@ -1,2 +1,2 @@
 # JetPackCompose
-Projeto de estudo JetPack Compose
+Projeto de estudo Jetpack Compose
