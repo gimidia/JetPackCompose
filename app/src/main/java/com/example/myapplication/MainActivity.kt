@@ -12,12 +12,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import kotlin.math.max
 
 @Composable
 fun NewsStory() {
@@ -34,6 +38,10 @@ fun NewsStory() {
             Text("Primavera", style = typography.body2)
             Text("Verão", style = typography.h6)
             Counter()
+            ScoreView(
+                Score("Gremio", 0 ,"Inter",0)
+            )
+
         }
     }
 }
@@ -46,6 +54,8 @@ class MainActivity : AppCompatActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     NewsStory()
+
+
                 }
             }
         }
@@ -56,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 fun Counter() {
     val count = remember { mutableStateOf(0) }
     Button(onClick = { count.value++ }) {
-        Text("'Cliques' ${count.value} tempos")
+        Text(text = "'Cliques' ${count.value} tempos")
     }
 }
 @Composable
@@ -82,6 +92,36 @@ fun ScoreView(score: Score){
         Row(
         modifier = Modifier.padding(bottom = 16.dp)
         ) {
+        TeamScore(
+            team = score.homeTeam,
+            score = score.homeScore,
+            onUpdate = { newScore -> score.homeScore = newScore
+
+            })
+        Text(
+            text = "x",
+            modifier = Modifier.padding(
+                start = 16.dp,
+                end = 16.dp
+            ),
+            style = TextStyle(
+                fontSize = 24.sp,
+                color = Color.Red
+            )
+        )
+        TeamScore(
+            team = score.visitorTeam,
+            score = score.visitorScore,
+            onUpdate = { newScore -> score.visitorScore = newScore})
+
+            
+        }
+        OutlinedButton(
+            onClick = {
+                score.homeScore = 0
+                score.visitorScore = 0
+            }) {
+            Text(text = "Reset")
 
         }
     }
@@ -94,10 +134,45 @@ fun ScoreView(score: Score){
             score.visitorScore = 0
 
         }) {
-        Text("Reset")
+        Text(text = "Reset")
     }
         
 
+}
+@Composable
+fun TeamScore(
+    team: String,
+    score: Int,
+    onUpdate: (Int) -> Unit
+){
+    Column(
+    horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+    Text(
+        text = team,
+        style = TextStyle(fontSize = 24.sp),
+        modifier = Modifier.padding(bottom = 16.dp)
+        )
+    Button(
+        onClick = {
+            onUpdate(score + 1)
+        }) {
+        Text(text = "+")
+    }
+    Text(
+        text = score.toString(),
+        style = MaterialTheme.typography.h4,
+        modifier = Modifier.padding(16.dp)
+        )
+    Button(
+        onClick = {
+            onUpdate(max(score -1, 0))
+        }) {
+        Text(text = "-")
+
+    }
+
+    }
 }
 
 @Preview(showBackground = true)
