@@ -126,18 +126,6 @@ fun ScoreView(score: Score){
         }
     }
 
-
-
-    Button(
-        onClick = {
-            score.homeScore = 0
-            score.visitorScore = 0
-
-        }) {
-        Text(text = "Reset")
-    }
-        
-
 }
 @Composable
 fun TeamScore(
