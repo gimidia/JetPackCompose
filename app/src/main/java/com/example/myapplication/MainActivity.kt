@@ -26,8 +26,8 @@ import kotlin.math.max
 @Composable
 fun NewsStory() {
 
-    MaterialTheme{
-        val typography =MaterialTheme.typography
+    MaterialTheme {
+        val typography = MaterialTheme.typography
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -39,7 +39,7 @@ fun NewsStory() {
             Text("Verão", style = typography.h6)
             Counter()
             ScoreView(
-                Score("Gremio", 0 ,"Inter",0)
+                Score("Gremio", 0, "Inter", 0)
             )
 
         }
@@ -69,8 +69,9 @@ fun Counter() {
         Text(text = "'Cliques' ${count.value} tempos")
     }
 }
+
 @Composable
-fun ImageHeader(){
+fun ImageHeader() {
     val image = imageResource(R.drawable.header)
     val imageModifier = Modifier
         .preferredHeight(180.dp)
@@ -81,7 +82,7 @@ fun ImageHeader(){
 }
 
 @Composable
-fun ScoreView(score: Score){
+fun ScoreView(score: Score) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -90,31 +91,32 @@ fun ScoreView(score: Score){
 
         //Parou Aqui
         Row(
-        modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp)
         ) {
-        TeamScore(
-            team = score.homeTeam,
-            score = score.homeScore,
-            onUpdate = { newScore -> score.homeScore = newScore
+            TeamScore(
+                team = score.homeTeam,
+                score = score.homeScore,
+                onUpdate = { newScore ->
+                    score.homeScore = newScore
 
-            })
-        Text(
-            text = "x",
-            modifier = Modifier.padding(
-                start = 16.dp,
-                end = 16.dp
-            ),
-            style = TextStyle(
-                fontSize = 24.sp,
-                color = Color.Red
+                })
+            Text(
+                text = "x",
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    color = Color.Red
+                )
             )
-        )
-        TeamScore(
-            team = score.visitorTeam,
-            score = score.visitorScore,
-            onUpdate = { newScore -> score.visitorScore = newScore})
+            TeamScore(
+                team = score.visitorTeam,
+                score = score.visitorScore,
+                onUpdate = { newScore -> score.visitorScore = newScore })
 
-            
+
         }
         OutlinedButton(
             onClick = {
@@ -127,38 +129,39 @@ fun ScoreView(score: Score){
     }
 
 }
+
 @Composable
 fun TeamScore(
     team: String,
     score: Int,
     onUpdate: (Int) -> Unit
-){
+) {
     Column(
-    horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-    Text(
-        text = team,
-        style = TextStyle(fontSize = 24.sp),
-        modifier = Modifier.padding(bottom = 16.dp)
+        Text(
+            text = team,
+            style = TextStyle(fontSize = 24.sp),
+            modifier = Modifier.padding(bottom = 16.dp)
         )
-    Button(
-        onClick = {
-            onUpdate(score + 1)
-        }) {
-        Text(text = "+")
-    }
-    Text(
-        text = score.toString(),
-        style = MaterialTheme.typography.h4,
-        modifier = Modifier.padding(16.dp)
+        Button(
+            onClick = {
+                onUpdate(score + 1)
+            }) {
+            Text(text = "+")
+        }
+        Text(
+            text = score.toString(),
+            style = MaterialTheme.typography.h4,
+            modifier = Modifier.padding(16.dp)
         )
-    Button(
-        onClick = {
-            onUpdate(max(score -1, 0))
-        }) {
-        Text(text = "-")
+        Button(
+            onClick = {
+                onUpdate(max(score - 1, 0))
+            }) {
+            Text(text = "-")
 
-    }
+        }
 
     }
 }
