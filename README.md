@@ -1,2 +1,2 @@
 # JetPackCompose
-Projeto de estudo Jetpack Compose
+Projeto Android para estudo do Jetpack Compose
